@@ -45,13 +45,13 @@ public class CarManager : MonoBehaviour {
 				int tempIndex = Random.Range (0, 100);
 				Debug.Log (tempIndex);
 
-						if (tempIndex <= 70 && 													//spawns small car
-							carPool.smallCarPool.deployed < carPool.smallCarPool.pool.Count) { 	//if deployed < list size
+						if (tempIndex <= 70 /*&& 													//spawns small car
+							carPool.smallCarPool.deployed < carPool.smallCarPool.pool.Count*/) { 	//if deployed < list size
 							TakeCarFromPool(carPool.smallCarPool).MoveToLane(lane);
 						}
 
-						if (tempIndex > 70 &&												//spawns big car
-							carPool.bigCarPool.deployed < carPool.bigCarPool.pool.Count){ 	//if deployed < list size
+						if (tempIndex > 70 /*&&												//spawns big car
+							/*carPool.bigCarPool.deployed < carPool.bigCarPool.pool.Count*/){ 	//if deployed < list size
 							TakeCarFromPool(carPool.bigCarPool).MoveToLane(lane);
 						}
 		}
@@ -63,14 +63,15 @@ public class CarManager : MonoBehaviour {
 	private Car TakeCarFromPool(Pool<Car> carPool){ //make this prettier
 		int i = 0;
 
-				while ( carPool.pool [i].gameObject.activeInHierarchy &&  
-						carPool.deployed < carPool.pool.Count) {
+				while ( carPool.pool [i].gameObject.activeInHierarchy /*&&
+                        carPool.deployed < carPool.pool.Count*/)
+        {
 
 					i = Random.Range (0, carPool.pool.Count);
 				}
 
 		carPool.pool [i].gameObject.SetActive (true);
-		carPool.deployed++;
+		//carPool.deployed++;
 
 		return carPool.pool[i];
 	}

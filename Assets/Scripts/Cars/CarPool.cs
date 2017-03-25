@@ -12,22 +12,33 @@ public class CarPool : MonoBehaviour {
 
 	void Awake(){
 		bigCarPool = new Pool<Car>(2);
-		smallCarPool = new Pool<Car>(4);
+		smallCarPool = new Pool<Car>(2);
 
 		Spawner<Car> (bigCars, bigCarPool.pool, bigCarPool.count);
 		Spawner<Car> (smallCars, smallCarPool.pool, smallCarPool.count);
-	}
 
-	void Spawner<T>(List<GameObject> objectList, List<T> poolList, int count){
+        foreach (Car car in bigCarPool.pool){
+            car.LeaveScreenAction += ReturnToPool;
+        }
+
+        foreach (Car car in smallCarPool.pool){
+            car.LeaveScreenAction += ReturnToPool;
+        }
+    }
+
+	void Spawner<T>(List<GameObject> objectList, List<T> poolList, int count) where T: UnityEngine.Component{
 		GameObject temp;
 		int i, j;
 
 		for (i=0; i < objectList.Count; i++) {
 			for (j = 0; j < count; j++) {
 				temp = Instantiate (objectList [i], transform);
-				poolList.Add (temp.GetComponent<T> ());
+                poolList.Add (temp.GetComponent<T> ());
 			}
 		}
 	} //end function
 
+    void ReturnToPool(Car car){ //make IPoolable later?
+        car.MoveToPool(this);
+    }
 }
