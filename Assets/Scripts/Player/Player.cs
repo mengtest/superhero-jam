@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    public LayerMask layerMask;
+
     public LaneManager laneManager;
     public int currentLaneIndex;
 
@@ -16,14 +18,26 @@ public class Player : MonoBehaviour {
         MoveToLane(laneManager.lanes[currentLaneIndex]);
     }
 
+    void FixedUpdate()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1, layerMask);
+        if (hit.collider != null)
+        {
+            Debug.Log(hit.collider);
+        }
+    }
+
     public void MoveUp()
     {
         if (!isJumping)
         {
             if (currentLaneIndex > 0)
             {
-                currentLaneIndex--;
-                MoveToLane(laneManager.lanes[currentLaneIndex]);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.1f, layerMask);
+                if (hit.collider == null){
+                    currentLaneIndex--;
+                    MoveToLane(laneManager.lanes[currentLaneIndex]);
+                }
             }
         }//endif
     }
@@ -34,8 +48,11 @@ public class Player : MonoBehaviour {
         {
             if (currentLaneIndex < laneManager.lanes.Length - 1)
             {
-                currentLaneIndex++;
-                MoveToLane(laneManager.lanes[currentLaneIndex]);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, layerMask);
+                if (hit.collider == null){
+                    currentLaneIndex++;
+                    MoveToLane(laneManager.lanes[currentLaneIndex]);
+                }
             }
         }//endif
     }
@@ -51,6 +68,7 @@ public class Player : MonoBehaviour {
 
     private void Setup(Lane lane)
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
+        transform.localPosition = new Vector3(transform.localPosition.x, 0, lane.transform.position.z-0.1f);
+        gameObject.layer = lane.layerIndex;
     }
 }
