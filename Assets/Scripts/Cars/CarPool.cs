@@ -12,7 +12,7 @@ public class CarPool : MonoBehaviour {
 
 	void Awake(){
 		bigCarPool = new Pool<Car>(2);
-		smallCarPool = new Pool<Car>(3);
+		smallCarPool = new Pool<Car>(4);
 
 		Spawner<Car> (bigCars, bigCarPool.pool, bigCarPool.count);
 		Spawner<Car> (smallCars, smallCarPool.pool, smallCarPool.count);

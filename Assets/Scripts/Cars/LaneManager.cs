@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaneManager : MonoBehaviour {
+public class LaneManager : MonoBehaviour
+{
 
-	public Lane[] lanes;
+    public Lane[] lanes;
 }

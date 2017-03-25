@@ -10,7 +10,6 @@ public class Car : MonoBehaviour {
 	//do I want acceleration?
 	//make a static moving function and just add a feature if needed
 
-
 	void Update(){
 		Move ();
 	}
