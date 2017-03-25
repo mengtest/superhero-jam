@@ -9,10 +9,13 @@ public class Player : MonoBehaviour {
     public LaneManager laneManager;
     public int currentLaneIndex;
 
-    public float jumpHeight;
-    public float jumpTime;
+    public float jumpForce;
+    public Vector3 jumpPos;
 
-    public bool isJumping;
+    public bool jump;
+    public bool isGrounded;
+
+    public GameObject shadow;
 
     void Awake(){
         MoveToLane(laneManager.lanes[currentLaneIndex]);
@@ -20,17 +23,20 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1, layerMask);
-        if (hit.collider != null)
+        if (jump)
         {
-            Debug.Log(hit.collider);
+            Debug.Log("jump");
+            transform.position += jumpPos;
+            isGrounded = jump = false;
         }
     }
 
+///////////Actions
+
     public void MoveUp()
     {
-        if (!isJumping)
-        {
+        /*if (isGrounded)
+        {*/
             if (currentLaneIndex > 0)
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.1f, layerMask);
@@ -39,13 +45,13 @@ public class Player : MonoBehaviour {
                     MoveToLane(laneManager.lanes[currentLaneIndex]);
                 }
             }
-        }//endif
+        //}//endif
     }
 
     public void MoveDown()
     {
-        if (!isJumping)
-        {
+        /*if (isGrounded)
+        {*/
             if (currentLaneIndex < laneManager.lanes.Length - 1)
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, layerMask);
@@ -54,11 +60,10 @@ public class Player : MonoBehaviour {
                     MoveToLane(laneManager.lanes[currentLaneIndex]);
                 }
             }
-        }//endif
+        //}//endif
     }
 
-    public void Jump()
-    {
+    public void Jump(){
     }
 
     private void MoveToLane (Lane lane){
@@ -66,9 +71,32 @@ public class Player : MonoBehaviour {
         this.Setup(lane);
     }
 
+///////////Setups
+
     private void Setup(Lane lane)
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, 0, lane.transform.position.z-0.1f);
+        //if lane == top then use a custom pos //imsorry
+        
+        if (isGrounded) {
+            transform.localPosition = new Vector3(transform.localPosition.x, 0, lane.transform.position.z - 0.1f);
+        }
+
+        else {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, lane.transform.position.z - 0.1f);
+        }
+
+        SetLayer(lane);
+    }
+
+    private void SetLayer(Lane lane){
         gameObject.layer = lane.layerIndex;
+        shadow.layer     = lane.layerIndex;
+    }
+
+///////////Collisions
+
+    void OnCollisionStay2D()
+    {
+        isGrounded = true;
     }
 }

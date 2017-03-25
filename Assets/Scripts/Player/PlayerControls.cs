@@ -4,35 +4,39 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
-    private Command buttonUpArrow, buttonDownArrow, buttonW, buttonS;
+    private Command buttonUpArrow, buttonDownArrow, buttonW, buttonS, buttonSpace;
+    Player player;
 
     void Start()
     {
-        buttonUpArrow  = buttonW = new MoveUp(gameObject.GetComponent<Player>());
-        buttonDownArrow = buttonS = new MoveDown(gameObject.GetComponent<Player>());
+        player = gameObject.GetComponent<Player>();
+
+        buttonUpArrow  = buttonW = new MoveUp(player);
+        buttonDownArrow = buttonS = new MoveDown(player);
+        buttonSpace = new Jump(player);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Debug.Log("up");
             buttonUpArrow.Execute();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Debug.Log("down");
             buttonDownArrow.Execute();
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("w");
             buttonW.Execute();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("s");
             buttonS.Execute();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            buttonSpace.Execute();
         }
     }
 }

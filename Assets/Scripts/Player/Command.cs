@@ -21,8 +21,7 @@ public class MoveUp : Command{
         }
 }
 
-public class MoveDown : Command
-{
+public class MoveDown : Command{
 
         private Player player;
 
@@ -33,4 +32,17 @@ public class MoveDown : Command
         public override void Execute(){
             player.MoveDown();
         }
+}
+
+public class Jump : Command{
+
+    private Player player;
+
+    public Jump(Player player){
+        this.player = player;
+    }
+
+    public override void Execute(){
+        player.jump = true;
+    }
 }
