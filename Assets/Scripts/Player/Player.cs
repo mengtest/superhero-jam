@@ -9,15 +9,16 @@ public class Player : MonoBehaviour {
     public LaneManager laneManager;
     public int currentLaneIndex;
 
-    public float jumpForce;
     public Vector3 jumpPos;
 
     public bool jump;
     public bool isGrounded;
 
     public GameObject shadow;
+    private Animator animator;
 
     void Awake(){
+        animator = GetComponent<Animator>();
         MoveToLane(laneManager.lanes[currentLaneIndex]);
     }
 
@@ -25,13 +26,14 @@ public class Player : MonoBehaviour {
     {
         if (jump)
         {
-            Debug.Log("jump");
             transform.position += jumpPos;
             isGrounded = jump = false;
+            animator.SetBool("isJumping", true);
         }
+
     }
 
-///////////Actions
+    ///////////Actions
 
     public void MoveUp()
     {
@@ -98,5 +100,6 @@ public class Player : MonoBehaviour {
     void OnCollisionStay2D()
     {
         isGrounded = true;
+        animator.SetBool("isJumping", false);
     }
 }
