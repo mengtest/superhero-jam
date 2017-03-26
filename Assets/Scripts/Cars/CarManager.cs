@@ -8,34 +8,57 @@ public class CarManager : MonoBehaviour {
 	public LaneManager laneManager;
 
 	public float currentTime;
+    public float speed;
 
     public bool isSpawning;
+    public bool isPlaying;
+
+    public float spawnTime;
 
     void Awake() {
         StartSpawning();
 
-        GameManager.StartGame += StartSpawning;
-        GameManager.EndGame += StopSpawning;
+        GameManager.StartIntro += StopSpawning;
+        GameManager.StartGame += StartPlaying;
+        GameManager.EndGame += StopPlaying;
     }
 
     void OnDestroy()
     {
-        GameManager.StartGame -= StartSpawning;
-        GameManager.EndGame -= StopSpawning;
+
+        GameManager.StartIntro -= StopSpawning;
+        GameManager.StartGame -= StartPlaying;
+        GameManager.EndGame -= StopPlaying;
+
     }
 
 	void Update(){
-		//TODO: make something that randomizes spawn time and spawn amount
         if (isSpawning){
             currentTime += Time.deltaTime;
 
-            if (currentTime >= 1)
+            if (currentTime >= spawnTime)
             {
                 Spawn();
                 currentTime = 0;
             }
+
+            if (isPlaying) { 
+                speed += Time.deltaTime / 100;
+            }
         }
-	}
+    }
+
+    public void StartPlaying()
+    {
+        isPlaying = true;
+        StartSpawning();
+    }
+
+    public void StopPlaying()
+    {
+        isPlaying = false;
+        StopSpawning();
+    }
 
     public void StartSpawning()
     {
@@ -75,12 +98,12 @@ public class CarManager : MonoBehaviour {
 
 						if (tempIndex <= 70 /*&& 													//spawns small car
 							carPool.smallCarPool.deployed < carPool.smallCarPool.pool.Count*/) { 	//if deployed < list size
-							TakeCarFromPool(carPool.smallCarPool).MoveToLane(lane);
+							TakeCarFromPool(carPool.smallCarPool).MoveToLane(lane, speed);
 						}
 
 						if (tempIndex > 70 /*&&												//spawns big car
 							/*carPool.bigCarPool.deployed < carPool.bigCarPool.pool.Count*/){ 	//if deployed < list size
-							TakeCarFromPool(carPool.bigCarPool).MoveToLane(lane);
+							TakeCarFromPool(carPool.bigCarPool).MoveToLane(lane, speed);
 						}
 		}
 	}

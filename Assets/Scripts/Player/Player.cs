@@ -20,12 +20,13 @@ public class Player : MonoBehaviour {
     void Awake(){
         animator = GetComponent<Animator>();
         laneManager = GameObject.Find("Lanes").GetComponent<LaneManager>();
-        MoveToLane(laneManager.lanes[currentLaneIndex]); //have this done by the start
 
+        GameManager.StartGame += Run;
         GameManager.EndGame += isHit;
     }
 
     void OnDestroy(){
+        GameManager.StartGame -= Run;
         GameManager.EndGame -= isHit;
     }
 
@@ -38,6 +39,25 @@ public class Player : MonoBehaviour {
             animator.SetBool("isJumping", true);
         }
 
+    }
+
+
+    ///////////Intro stuffs
+    public void Stand(){
+        animator.SetTrigger("Stand");
+    }
+
+    public void Look(){
+        animator.SetTrigger("Look");
+    }
+
+    public void Run()
+    {
+        animator.SetTrigger("Run");
+    }
+
+    public void MoveToStartingLane(){
+        MoveToLane(laneManager.lanes[currentLaneIndex]);
     }
 
     ///////////Game end stuffs

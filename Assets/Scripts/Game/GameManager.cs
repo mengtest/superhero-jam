@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public delegate void Del();
+    public static Del StartIntro;
     public static Del StartGame;
     public static Del EndGame;
 

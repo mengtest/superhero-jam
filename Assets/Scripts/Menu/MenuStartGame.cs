@@ -7,7 +7,6 @@ public class MenuStartGame : MonoBehaviour {
 
     Animator thisAnimator;
     Animator logoAnimator;
-    CarManager carManager;
 
     bool pressed ;
 
@@ -15,10 +14,15 @@ public class MenuStartGame : MonoBehaviour {
     {
         pressed = false;
 
-        carManager = GameObject.Find("CarManager").GetComponent<CarManager>();
-
         thisAnimator = GetComponent<Animator>();
         logoAnimator = GameObject.Find("Logo").GetComponent<Animator>();
+
+        GameManager.StartIntro += DoStuffs;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.StartIntro -= DoStuffs;
     }
 
 	void Update () {
@@ -26,13 +30,15 @@ public class MenuStartGame : MonoBehaviour {
 		    if (Input.GetKeyDown(KeyCode.Space))
             {
                 pressed = true;
-                carManager.StopSpawning();
-                Invoke("FadeOut",2);
-
-                SceneManager.LoadScene("Player", LoadSceneMode.Additive);
-                GameObject.Find("GameManager").GetComponent<GameManager>().UnloadMenu();
+                GameManager.StartIntro();
             }
         }
+    }
+
+    void DoStuffs() { //im sorry
+        Invoke("FadeOut", 2);
+        SceneManager.LoadScene("Player", LoadSceneMode.Additive);
+        GameObject.Find("GameManager").GetComponent<GameManager>().UnloadMenu();
     }
 
     void FadeOut()

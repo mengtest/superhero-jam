@@ -21,6 +21,7 @@ public class Car : MonoBehaviour {
         checker = new CameraChecker(Camera.main);
 
         GameManager.EndGame += StopPlaying;
+        gameObject.SetActive(false);
     }
 
     void OnDestroy() {
@@ -48,8 +49,9 @@ public class Car : MonoBehaviour {
     //oncolliderenter
 
 
-    public void MoveToLane(Lane lane){
+    public void MoveToLane(Lane lane, float speed){
 		transform.SetParent (lane.transform);
+        this.speed = speed;
 		this.Setup(lane);
 	}
     
