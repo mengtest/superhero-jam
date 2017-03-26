@@ -31,7 +31,7 @@ public class CarManager : MonoBehaviour {
 		//TODO
 			//while lane.transform.childCount < lane.maxAmountOfCars 
 				laneIndex = Random.Range (0,laneManager.lanes.Length);
-				Debug.Log (laneManager.lanes[laneIndex]);
+				//Debug.Log (laneManager.lanes[laneIndex]);
 
 		return laneManager.lanes[laneIndex];
 	}
@@ -43,7 +43,7 @@ public class CarManager : MonoBehaviour {
 	private void SpawnTo(Lane lane){
 		if (lane != null) {
 				int tempIndex = Random.Range (0, 100);
-				Debug.Log (tempIndex);
+				//Debug.Log (tempIndex);
 
 						if (tempIndex <= 70 /*&& 													//spawns small car
 							carPool.smallCarPool.deployed < carPool.smallCarPool.pool.Count*/) { 	//if deployed < list size
@@ -65,7 +65,7 @@ public class CarManager : MonoBehaviour {
 
 				while ( carPool.pool [i].gameObject.activeInHierarchy /*&&
                         carPool.deployed < carPool.pool.Count*/)
-        {
+                {
 
 					i = Random.Range (0, carPool.pool.Count);
 				}
