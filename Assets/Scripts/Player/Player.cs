@@ -19,7 +19,8 @@ public class Player : MonoBehaviour {
 
     void Awake(){
         animator = GetComponent<Animator>();
-        MoveToLane(laneManager.lanes[currentLaneIndex]);
+        laneManager = GameObject.Find("Lanes").GetComponent<LaneManager>();
+        MoveToLane(laneManager.lanes[currentLaneIndex]); //have this done by the start
     }
 
     void FixedUpdate()

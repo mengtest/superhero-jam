@@ -47,6 +47,7 @@ public class Car : MonoBehaviour {
 	private void Setup(Lane lane){
         transform.localPosition = new Vector3(startPos, 0, lane.transform.position.z + 0.1f);
         gameObject.layer = lane.layerIndex;
+        transform.GetChild(0).gameObject.layer = lane.layerIndex;
     }
 
 	private void Move(){
