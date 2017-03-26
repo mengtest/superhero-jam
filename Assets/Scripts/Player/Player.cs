@@ -21,6 +21,12 @@ public class Player : MonoBehaviour {
         animator = GetComponent<Animator>();
         laneManager = GameObject.Find("Lanes").GetComponent<LaneManager>();
         MoveToLane(laneManager.lanes[currentLaneIndex]); //have this done by the start
+
+        GameManager.EndGame += isHit;
+    }
+
+    void OnDestroy(){
+        GameManager.EndGame -= isHit;
     }
 
     void FixedUpdate()
@@ -32,6 +38,22 @@ public class Player : MonoBehaviour {
             animator.SetBool("isJumping", true);
         }
 
+    }
+
+    ///////////Game end stuffs
+    void isHit(){
+        StopAnim();
+        Invoke("RemoveCollider", 0);
+    }
+
+    void StopAnim(){
+        animator.Stop();
+    }
+
+    void RemoveCollider(){
+        jumpPos = new Vector3(0, 0.1f, 0);
+        Jump();
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     ///////////Actions
@@ -67,6 +89,7 @@ public class Player : MonoBehaviour {
     }
 
     public void Jump(){
+        jump = true;
     }
 
     private void MoveToLane (Lane lane){

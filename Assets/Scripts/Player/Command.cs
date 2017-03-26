@@ -43,6 +43,6 @@ public class Jump : Command{
     }
 
     public override void Execute(){
-        player.jump = true;
+        player.Jump();
     }
 }

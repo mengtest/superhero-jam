@@ -8,6 +8,7 @@ public class CarHitCollider : MonoBehaviour {
     {
         if (col.name == "Player"){
             Debug.Log("hit");
+            GameManager.EndGame();
             //if hit call the static del
         }
     }

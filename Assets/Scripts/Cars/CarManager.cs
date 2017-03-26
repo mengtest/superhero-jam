@@ -9,17 +9,45 @@ public class CarManager : MonoBehaviour {
 
 	public float currentTime;
 
+    public bool isSpawning;
+
+    void Awake() {
+        StartSpawning();
+
+        GameManager.StartGame += StartSpawning;
+        GameManager.EndGame += StopSpawning;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.StartGame -= StartSpawning;
+        GameManager.EndGame -= StopSpawning;
+    }
+
 	void Update(){
 		//TODO: make something that randomizes spawn time and spawn amount
-		currentTime += Time.deltaTime;
+        if (isSpawning){
+            currentTime += Time.deltaTime;
 
-		if (currentTime >= 1) {
-			Spawn ();
-			currentTime = 0;
-		}
+            if (currentTime >= 1)
+            {
+                Spawn();
+                currentTime = 0;
+            }
+        }
 	}
 
-	void Spawn(){
+    public void StartSpawning()
+    {
+        isSpawning = true;
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
+    }
+
+    void Spawn(){
 		SpawnTo (ChooseLane());
 	}
 		
@@ -75,4 +103,5 @@ public class CarManager : MonoBehaviour {
 
 		return carPool.pool[i];
 	}
+
 }

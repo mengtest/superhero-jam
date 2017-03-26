@@ -8,6 +8,7 @@ public class ParallaxScroller : MonoBehaviour {
     public float distance;
 
     public float scrollSpeed;
+    private float speed;
 
     public string poolName;
     public BackgroundPool backgroundPool;
@@ -16,7 +17,8 @@ public class ParallaxScroller : MonoBehaviour {
 
     void Start(){
         pool = (Pool<Poolable>)typeof(BackgroundPool).GetField(poolName).GetValue(backgroundPool);
-        
+        speed = scrollSpeed;
+
         foreach (Poolable obj in pool.pool){
             obj.HalfScreenAction += Spawn;
 
@@ -44,7 +46,7 @@ public class ParallaxScroller : MonoBehaviour {
     }
 
     private void Scroll(){
-        transform.position -= new Vector3(1, 0.0f, 0.0f) * scrollSpeed * Time.deltaTime;
+        transform.position -= new Vector3(1, 0.0f, 0.0f) * speed * Time.deltaTime;
     }
 
     /**

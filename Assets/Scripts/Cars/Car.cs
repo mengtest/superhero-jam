@@ -12,16 +12,34 @@ public class Car : MonoBehaviour {
 
     private CameraChecker checker;
 
+    private bool isPlaying = true;
+
     //do I want acceleration?
     //make a static moving function and just add a feature if needed
 
     void Awake() {
         checker = new CameraChecker(Camera.main);
+
+        GameManager.EndGame += StopPlaying;
     }
 
-	void Update() {
-		Move ();
- 
+    void OnDestroy() {
+        GameManager.EndGame -= StopPlaying;
+    }
+
+    void StartPlaying(){
+        isPlaying = true;
+    }
+
+    void StopPlaying(){
+        isPlaying = false;
+    }
+
+    void Update() {
+        if (isPlaying) {
+		    Move ();
+        }
+
         if (checker.IsOutOfBounds(gameObject)){
             LeaveScreenAction(this);
         }

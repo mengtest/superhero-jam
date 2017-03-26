@@ -36,14 +36,12 @@ public class Poolable : MonoBehaviour {
             if (checker.IsHalfwayRight(gameObject))
             {
                 isHalfway = true;
-                Debug.Log("halfway");
                 HalfScreenAction(this);
             }
         }
 
         if (checker.IsOutOfBoundsRight(gameObject))
         {
-            Debug.Log("outofbounds");
             LeaveScreenAction(this);
         }
     }

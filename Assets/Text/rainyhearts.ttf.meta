@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 90f8e00da24c1894089a64622a7d0367
-timeCreated: 1490489299
+guid: 22ad1d723c90c27488a88ae9077b928f
+timeCreated: 1490525115
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
-  fontSize: 1
+  fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Pixeled
+  fontName: rainyhearts
   fontNames:
-  - Pixeled
+  - rainyhearts
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
